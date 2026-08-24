@@ -1,0 +1,7 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# R build artifacts (legacy-r-skeleton is kept as reference, but generated output isn't)
+legacy-r-skeleton/_site/
+legacy-r-skeleton/.Rhistory

@@ -1,0 +1,12 @@
+---
+title: "Inanimados"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+source("R/build_gallery.R")
+```
+
+```{r}
+build_gallery("photos/inanimados") %>% cat()
+```

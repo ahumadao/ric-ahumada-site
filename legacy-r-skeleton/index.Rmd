@@ -1,0 +1,27 @@
+---
+title: "RIC AHUMADA"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+source("R/build_gallery.R")
+```
+
+<div class="intro-hero">
+Gracias por estar aquí. Soy [Ricardo](sobre-mi.html). Aquí encontrarás mis pinturas en acuarela.
+Si te gusta alguna y deseas adquirirla, envíame un mensaje a través de
+[Instagram](https://www.instagram.com/ric.ahumada).
+</div>
+
+## Revisa las secciones
+
+- [Paisaje natural](paisaje-natural.html)
+- [Paisaje urbano](paisaje-urbano.html)
+- [Inanimados](inanimados.html)
+- [Palestina](palestina.html)
+
+```{r}
+build_gallery("photos/paisaje-natural") %>% cat()
+```
+
+<p class="tags">#Acuarela #Watercolor #Watercolour #Aquarelle #Wasserfarbe #Aquarela #Aguarela</p>

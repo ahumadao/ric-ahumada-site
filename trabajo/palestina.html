@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palestina — RIC AHUMADA</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-bar">
+    <a class="brand" href="../index.html">RIC AHUMADA</a>
+    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <button class="dropdown-toggle">Trabajo &#9662;</button>
+        <ul class="dropdown-menu">
+          <li><a href="paisaje-natural.html">Paisaje natural</a></li>
+          <li><a href="paisaje-urbano.html">Paisaje urbano</a></li>
+          <li><a href="inanimados.html">Inanimados</a></li>
+          <li><a href="palestina.html">Palestina</a></li>
+        </ul>
+      </li>
+      <li><a href="../condiciones-de-venta.html">Condiciones de venta</a></li>
+      <li><a href="../sobre-mi.html">Sobre mí</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="category-header">
+    <h1>Palestina</h1>
+    <p class="category-greeting">Gracias por estar aquí! 🙂&#8205;&#8613;&#65039;</p>
+    <p><a href="../condiciones-de-venta.html">Condiciones de venta</a></p>
+  </div>
+
+  <p class="availability-legend">Disponible 🟢&nbsp;&nbsp;&nbsp;No disponible 🔴</p>
+
+  <div class="gallery-grid" id="gallery"></div>
+</main>
+
+<footer class="site-footer">
+  Ricardo Ahumada O &middot; <a href="https://www.instagram.com/ric.ahumada" target="_blank" rel="noopener">Instagram</a>
+</footer>
+
+<script src="../assets/js/site.js"></script>
+<script>renderGallery('../data/palestina.json', '#gallery');</script>
+</body>
+</html>

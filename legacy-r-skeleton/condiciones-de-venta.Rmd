@@ -1,0 +1,14 @@
+---
+title: "Condiciones de venta"
+---
+
+## Precios y condiciones de venta
+
+Reemplaza este texto con tus precios, formas de pago, envío/retiro y cualquier
+otra condición de venta que quieras dejar clara antes de que alguien te
+escriba por [Instagram](https://www.instagram.com/ric.ahumada).
+
+- **Formato:** _(ej. 30x40 cm, papel 300g)_
+- **Precio:** _(ej. desde $XX.XXX CLP)_
+- **Envío / retiro:** _(ej. despacho en Santiago, retiro en Colina)_
+- **Forma de pago:** _(ej. transferencia)_

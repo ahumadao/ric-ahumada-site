@@ -1,0 +1,25 @@
+name: "ric-ahumada"
+output_dir: "_site"
+navbar:
+  title: "RIC AHUMADA"
+  left:
+    - text: "Trabajo"
+      menu:
+        - text: "Paisaje natural"
+          href: paisaje-natural.html
+        - text: "Paisaje urbano"
+          href: paisaje-urbano.html
+        - text: "Inanimados"
+          href: inanimados.html
+        - text: "Palestina"
+          href: palestina.html
+    - text: "Condiciones de venta"
+      href: condiciones-de-venta.html
+    - text: "Sobre mí"
+      href: sobre-mi.html
+output:
+  html_document:
+    theme: cosmo
+    css: styles.css
+    include:
+      after_body: footer.html

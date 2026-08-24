@@ -1,0 +1,15 @@
+---
+title: "Sobre mí"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+source("R/build_gallery.R")
+```
+
+Escribe aquí tu biografía como acuarelista: cómo empezaste a pintar, tu estilo,
+qué te inspira y cualquier otro detalle que quieras compartir.
+
+```{r}
+build_gallery("photos/sobre-mi") %>% cat()
+```
