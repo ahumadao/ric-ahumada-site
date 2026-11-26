@@ -16,6 +16,30 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Precio por tamaño (ancho × alto, en cm²). El precio de cada obra disponible
+// se calcula siempre a partir de esta tabla — el campo "price" de los JSON
+// de data/ ya no se usa. Para cambiar precios, edita los montos aquí.
+var PRICING_TIERS = [
+  { nombre: 'Mini', hasta: 200, precio: 20000 },
+  { nombre: 'Pequeño', hasta: 350, precio: 30000 },
+  { nombre: 'Mediano', hasta: 750, precio: 40000 },
+  { nombre: 'Grande', hasta: 1200, precio: 55000 },
+  { nombre: 'Extra grande', hasta: Infinity, precio: 80000 }
+];
+
+// Extrae ancho y alto (en cm) desde strings como "~19x14 cms." o "26x36 cms."
+// y devuelve el precio del tramo correspondiente, o null si no se pudo leer.
+function priceFromDimensions(dimensions) {
+  if (!dimensions) return null;
+  var match = /(\d+(?:\.\d+)?)\s*x\s*(\d+(?:\.\d+)?)/i.exec(dimensions);
+  if (!match) return null;
+  var area = parseFloat(match[1]) * parseFloat(match[2]);
+  for (var i = 0; i < PRICING_TIERS.length; i++) {
+    if (area <= PRICING_TIERS[i].hasta) return PRICING_TIERS[i].precio;
+  }
+  return null;
+}
+
 // Renders a category's painting list into a .gallery-grid element from a JSON data file.
 function renderGallery(dataUrl, mountSelector) {
   var mount = document.querySelector(mountSelector);
@@ -36,8 +60,9 @@ function renderGallery(dataUrl, mountSelector) {
       var html = paintings.map(function (p) {
         var dotClass = p.available ? 'available' : 'sold';
         var dotEmoji = p.available ? '🟢' : '🔴';
-        var priceHtml = p.available && p.price != null
-          ? '<div class="painting-price">$' + money.format(p.price) + '</div>'
+        var computedPrice = priceFromDimensions(p.dimensions);
+        var priceHtml = p.available && computedPrice != null
+          ? '<div class="painting-price">$' + money.format(computedPrice) + '</div>'
           : '<div class="painting-price sold">No disponible</div>';
         var courseHtml = p.course
           ? '<div class="painting-course">Realizado en contexto de curso.</div>'
