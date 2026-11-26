@@ -1,5 +1,5 @@
 [
   {"title": "Hallulla", "available": true, "dimensions": "~28x19 cms.", "paper": "Arches grano fino", "paint": "White Nights + Horadam", "course": false, "image": "../assets/img/inanimados/hallulla.png"},
   {"title": "Tela - práctica CAPA", "available": true, "dimensions": "~14x23 cms.", "paper": "Baohong - grano fino", "paint": "White Nights", "course": true, "image": "../assets/img/inanimados/tela.png"},
-  {"title": "Estatua", "available": true, "dimensions": "~14 x 20 cms.", "paper": "Baohong - grano fino", "paint": "White Nights", "course": false, "image": "https://lh3.googleusercontent.com/sitesv/AG8ngQUrLHKeGC4qh-OuDmZ19fcUnknwcqalC3JWXUv9XLe5qw27TVA7M7Yu-Fer3tZOMx8Jv-rc_MIuFctOWgYsLGBwxp2CILNm77yV8U8n3-G8qkIkLnWFUJp7dBtp8BLJs1JjHWR8USchzQdHNL8sUsMU_odeDsK6yzBnMjVqUwgM7VTnSQUPUyEpV5ukQbXtopohtCyePftKihBtfIzCGST60OqafZ7EUzYW5Mpd=w1280"}
+  {"title": "Estatua", "available": true, "dimensions": "~14 x 20 cms.", "paper": "Baohong - grano fino", "paint": "White Nights", "course": false, "image": "../assets/img/inanimados/estatua.jpg"}
 ]
