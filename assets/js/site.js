@@ -16,6 +16,45 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Lightbox: agranda la imagen de una obra al hacer clic. Se crea una sola vez
+// y se reutiliza en cualquier página que tenga .painting-card img.
+function ensureLightbox() {
+  var dialog = document.getElementById('lightbox');
+  if (dialog) return dialog;
+
+  dialog = document.createElement('dialog');
+  dialog.id = 'lightbox';
+  dialog.className = 'lightbox';
+  dialog.innerHTML =
+    '<button class="lightbox-close" type="button" aria-label="Cerrar">&times;</button>' +
+    '<img alt="">' +
+    '<div class="lightbox-caption"><strong></strong><span></span></div>';
+  document.body.appendChild(dialog);
+
+  dialog.addEventListener('click', function (e) {
+    if (e.target === dialog || e.target.closest('.lightbox-close')) dialog.close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && dialog.open) dialog.close();
+  });
+
+  document.addEventListener('click', function (e) {
+    var img = e.target.closest('.painting-card img');
+    if (!img) return;
+    var card = img.closest('.painting-card');
+    dialog.querySelector('img').src = img.src;
+    dialog.querySelector('img').alt = img.alt;
+    dialog.querySelector('.lightbox-caption strong').textContent =
+      card ? card.querySelector('.painting-title').textContent.replace(/^[^\wÀ-ÿ]+/, '') : img.alt;
+    var meta = card ? card.querySelector('.painting-meta') : null;
+    dialog.querySelector('.lightbox-caption span').textContent = meta ? meta.textContent : '';
+    dialog.showModal();
+  });
+
+  return dialog;
+}
+document.addEventListener('DOMContentLoaded', ensureLightbox);
+
 // Precio por tamaño (ancho × alto, en cm²). El precio de cada obra disponible
 // se calcula siempre a partir de esta tabla — el campo "price" de los JSON
 // de data/ ya no se usa. Para cambiar precios, edita los montos aquí.
