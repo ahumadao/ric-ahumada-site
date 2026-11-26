@@ -1,5 +1,0 @@
-[
-  {"title": "Hallulla", "available": true, "dimensions": "~28x19 cms.", "paper": "Arches grano fino", "paint": "White Nights + Horadam", "course": false, "image": "../assets/img/inanimados/hallulla.png"},
-  {"title": "Tela - práctica CAPA", "available": true, "dimensions": "~14x23 cms.", "paper": "Baohong - grano fino", "paint": "White Nights", "course": true, "image": "../assets/img/inanimados/tela.png"},
-  {"title": "Estatua", "available": true, "dimensions": "~14 x 20 cms.", "paper": "Baohong - grano fino", "paint": "White Nights", "course": false, "image": "../assets/img/inanimados/estatua.jpg"}
-]

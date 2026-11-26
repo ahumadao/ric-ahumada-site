@@ -1,74 +1,47 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="es" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RIC AHUMADA</title>
-<meta name="description" content="Ricardo Ahumada — pinturas en acuarela. Paisaje natural, paisaje urbano, inanimados y Palestina.">
-<link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ric Ahumada | Acuarelas</title>
+  <meta name="description" content="Acuarelas originales de Ric Ahumada: paisaje natural, paisaje urbano, inanimados y Palestina.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖌️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<header class="site-header">
-  <div class="nav-bar">
-    <a class="brand" href="index.html">RIC AHUMADA</a>
-    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
-    <ul class="nav-links">
-      <li class="has-dropdown">
-        <button class="dropdown-toggle">Trabajo &#9662;</button>
-        <ul class="dropdown-menu">
-          <li><a href="trabajo/paisaje-natural.html">Paisaje natural</a></li>
-          <li><a href="trabajo/paisaje-urbano.html">Paisaje urbano</a></li>
-          <li><a href="trabajo/inanimados.html">Inanimados</a></li>
-          <li><a href="trabajo/palestina.html">Palestina</a></li>
-        </ul>
-      </li>
-      <li><a href="condiciones-de-venta.html">Condiciones de venta</a></li>
-      <li><a href="sobre-mi.html">Sobre mí</a></li>
-    </ul>
-  </div>
-</header>
-
-<main class="wrap">
-  <div class="intro-hero">
-    <p>Gracias por estar aquí. Soy <a href="sobre-mi.html">Ricardo</a>. Aquí encontrarás mis pinturas en acuarela.
-    Si a ti también te gusta alguna de las y deseas adquirirla, envía un mensaje a través de
-    <a href="https://www.instagram.com/ric.ahumada" target="_blank" rel="noopener">Instagram</a>.</p>
+  <div class="envoltura">
+    <header class="cabecera">
+      <a class="firma" href="#">Ric Ahumada<small>Acuarelas</small></a>
+      <nav class="menu" aria-label="Principal">
+        <a href="#paisaje-natural">Paisaje natural</a>
+        <a href="#paisaje-urbano">Paisaje urbano</a>
+        <a href="#inanimados">Inanimados</a>
+        <a href="#palestina">Palestina</a>
+        <a href="#precios">Precios</a>
+        <a href="#condiciones">Condiciones</a>
+        <a href="#sobre-mi">Sobre mí</a>
+      </nav>
+    </header>
+    <main id="contenido"></main>
+    <footer class="pie">
+      <span>© <span id="anio"></span> Ric Ahumada</span>
+      <nav aria-label="Contacto">
+        <a href="https://www.instagram.com/ric.ahumada/" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:contacto@ric-ahumada.com">contacto@ric-ahumada.com</a>
+      </nav>
+    </footer>
   </div>
 
-  <nav class="section-links">
-    <a href="trabajo/paisaje-natural.html">Paisaje Natural</a>
-    <a href="trabajo/paisaje-urbano.html">Paisaje Urbano</a>
-    <a href="trabajo/inanimados.html">Inanimados</a>
-    <a href="trabajo/palestina.html">Palestina</a>
-  </nav>
+  <dialog class="visor" id="visor" aria-labelledby="visor-titulo">
+    <button class="cerrar" type="button" aria-label="Cerrar">×</button>
+    <div class="visor-imagen"></div>
+    <div class="visor-cartela"></div>
+  </dialog>
 
-  <div class="gallery-grid" id="home-preview"></div>
-
-  <p class="tags">#Acuarela #Watercolor #Watercolour #Aquarelle #Wasserfarbe #Aquarela #Aguarela #水彩 #ألوان مائي</p>
-
-  <p class="cta-line"><a href="condiciones-de-venta.html">Precios y condiciones de venta</a></p>
-</main>
-
-<footer class="site-footer">
-  Ricardo Ahumada O &middot; <a href="https://www.instagram.com/ric.ahumada" target="_blank" rel="noopener">Instagram</a>
-</footer>
-
-<script src="assets/js/site.js"></script>
-<script>
-  // Home preview: first painting from each category, image-only cards.
-  Promise.all([
-    fetch('data/paisaje-natural.json').then(r => r.json()),
-    fetch('data/paisaje-urbano.json').then(r => r.json()),
-    fetch('data/inanimados.json').then(r => r.json()),
-    fetch('data/palestina.json').then(r => r.json())
-  ]).then(function (lists) {
-    var mount = document.getElementById('home-preview');
-    var picks = lists.map(function (list) { return list[0]; }).filter(Boolean);
-    mount.innerHTML = picks.map(function (p) {
-      return '<article class="painting-card"><img src="' + p.image + '" alt="' + p.title + '" loading="lazy"></article>';
-    }).join('');
-  }).catch(function (err) { console.error(err); });
-</script>
+  <script src="assets/js/obras.js"></script>
+  <script src="assets/js/site.js"></script>
 </body>
 </html>
