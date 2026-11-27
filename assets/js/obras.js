@@ -29,7 +29,7 @@ window.CONFIG = {
   },
 
   // Obras del carrusel de portada (por id, en orden). Las que no tengan imagen se omiten solas.
-  destacadas: ["dia-nublado-3", "dia-nublado-1s", "campo-nublado-con-flores", "dia-nublado-1", "dia-nublado-2", "dia-nublado-2s", "oscureciendo", "amanecer-o-anochecer"]
+  destacadas: ["amanecer-o-anochecer", "oscureciendo", "dia-nublado-2s", "dia-nublado-2", "dia-nublado-1", "campo-nublado-con-flores", "dia-nublado-1s", "dia-nublado-3"]
 };
 
 window.SERIES = [

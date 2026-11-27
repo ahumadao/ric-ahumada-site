@@ -64,13 +64,13 @@ a:hover { color: var(--acento); text-decoration-color: currentColor; }
   text-decoration: none; line-height: 1;
 }
 .firma:hover { color: var(--tinta); }
-.firma { display: flex; flex-direction: column; align-items: center; }
+.firma { display: flex; align-items: center; gap: clamp(0.9rem, 2vw, 1.4rem); text-align: left; }
 .sello {
-  width: clamp(4.25rem, 8vw, 5.5rem); height: auto; margin-bottom: clamp(1rem, 2vw, 1.4rem);
+  width: clamp(3.75rem, 7vw, 5rem); height: auto; flex-shrink: 0;
   filter: var(--sello-filtro); transition: transform 0.8s cubic-bezier(.2,.7,.2,1);
 }
 .firma:hover .sello { transform: rotate(-3deg) scale(1.04); }
-.firma small { display: block; font-style: normal; font-size: 0.64rem; color: var(--tenue); margin-top: 0.9rem; letter-spacing: 0.42em; padding-left: 0.42em; }
+.firma small { display: block; font-style: normal; font-size: 0.64rem; color: var(--tenue); margin-top: 0.75rem; letter-spacing: 0.42em; padding-left: 0.1em; }
 .menu {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem clamp(1.1rem, 2.6vw, 2.4rem);
   font-size: 0.68rem; margin-top: clamp(1.75rem, 3.5vw, 2.5rem); padding: 1.05rem 0;
