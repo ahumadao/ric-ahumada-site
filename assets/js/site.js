@@ -6,12 +6,18 @@
   const main = $("#contenido");
   const visor = $("#visor");
   let temporizador = null;
+  const quietoGlobal = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const fuente = (o) => IMG[o.id] || o.img;
   const pesos = (n) => "$" + n.toLocaleString("es-CL");
   const formatoDe = (o) => C.formatos.find((f) => o.ancho * o.alto <= f.hasta);
+  const papel = (o) => o.papel.replace(/^papel\s+/i, "");
   const medidas = (o) => `${o.ancho} × ${o.alto} cm`;
   const porId = (id) => OBRAS.find((o) => o.id === id);
+  const ROMANOS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
+  const disponible = (o) => o.estado === "disponible";
+  const estado = (o) => `<span class="estado${disponible(o) ? "" : " no"}">${disponible(o) ? "Disponible" : "No disponible"}</span>`;
+  const dos = (n) => String(n).padStart(2, "0");
   const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   function cargar(src) {
@@ -65,13 +71,18 @@
           </div>` : ""}
         </div>
       </section>
-      <section class="presentacion"><p>Acuarelas originales de paisaje, ciudad y objetos cotidianos. Cada obra es única y se entrega sin enmarcar.</p></section>
+      <section class="presentacion aparece">
+        <p class="rotulo">Obra original sobre papel</p>
+        <p class="cita">Acuarelas de paisaje, ciudad y objetos cotidianos. Cada obra es única y se entrega sin enmarcar.</p>
+        <span class="ornamento" aria-hidden="true"></span>
+      </section>
       <section class="series" aria-label="Series">
         ${SERIES.map((s, i) => `
-          <a class="serie" href="#${s.id}">
+          <a class="serie aparece" href="#${s.id}">
             <div class="marco">${portadasSerie[i] ? `<img src="${esc(fuente(portadasSerie[i]))}" alt="" loading="lazy">` : ""}</div>
+            <span class="numero">Serie ${ROMANOS[i]} · ${OBRAS.filter((o) => o.serie === s.id).length} obras</span>
             <h2>${s.nombre}</h2>
-            <p>${s.bajada} ${OBRAS.filter((o) => o.serie === s.id).length} obras.</p>
+            <p>${s.bajada}</p>
           </a>`).join("")}
       </section>`;
 
@@ -85,8 +96,8 @@
       actual = (n + nodos.length) % nodos.length;
       nodos[actual].classList.add("activa"); nodos[actual].removeAttribute("aria-hidden");
       const o = diapos[actual];
-      cartela.innerHTML = `<p class="titulo">${esc(o.titulo)}</p><p class="datos">Acuarela sobre papel ${esc(o.papel)}, ${medidas(o)}</p>`;
-      if (contador) contador.textContent = `${actual + 1} / ${nodos.length}`;
+      cartela.innerHTML = `<p class="titulo">${esc(o.titulo)}</p><p class="datos">${esc(papel(o))} · ${medidas(o)}</p>`;
+      if (contador) contador.textContent = `${dos(actual + 1)} — ${dos(nodos.length)}`;
     };
     mostrar(0);
     main.querySelectorAll("[data-paso]").forEach((b) => b.addEventListener("click", () => { mostrar(actual + Number(b.dataset.paso)); reiniciar(); }));
@@ -105,25 +116,27 @@
       if (e.key === "ArrowLeft") mostrar(actual - 1);
     });
     reiniciar();
+    revelar();
   }
 
   /* ---------- Galería por serie ---------- */
   function galeria(serie) {
     const obras = [...OBRAS.filter((o) => o.serie === serie.id)]
-      .sort((a, b) => (a.estado === "vendida") - (b.estado === "vendida"));
+      .sort((a, b) => (a.estado !== "disponible") - (b.estado !== "disponible"));
     main.innerHTML = `
-      <header class="encabezado-pagina"><h1>${serie.nombre}</h1><p>${serie.bajada}</p></header>
+      <header class="encabezado-pagina"><p class="rotulo">Serie ${ROMANOS[SERIES.indexOf(serie)]} · ${obras.length} obras</p><h1>${serie.nombre}</h1><p>${serie.bajada}</p></header>
       <section class="galeria">
         ${obras.map((o) => `
-          <figure class="obra">
+          <figure class="obra aparece">
             <button type="button" data-abrir="${o.id}" aria-label="Ver ${esc(o.titulo)}">${imagen(o)}</button>
             <figcaption>
               <span class="titulo">${esc(o.titulo)}</span>
               <span class="datos">${medidas(o)}</span>
-              ${o.estado === "vendida" ? `<span class="vendida-marca">Colección privada</span>` : ""}
+              ${estado(o)}
             </figcaption>
           </figure>`).join("")}
       </section>`;
+    revelar();
   }
 
   /* ---------- Visor de obra ---------- */
@@ -134,7 +147,7 @@
     const asunto = encodeURIComponent(`Consulta por «${o.titulo}»`);
     const correo = `mailto:${C.correo}?subject=${asunto}`;
     let compra = "";
-    if (o.estado === "disponible") {
+    if (disponible(o)) {
       compra = link
         ? `<a class="boton principal" href="${esc(link)}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>
            <a class="boton secundario" href="${correo}">Consultar por correo</a>
@@ -144,12 +157,13 @@
     }
     $(".visor-imagen", visor).innerHTML = imagen(o);
     $(".visor-cartela", visor).innerHTML = `
+      <p class="rotulo">${esc(SERIES.find((s) => s.id === o.serie)?.nombre || "")}</p>
       <h2 id="visor-titulo">${esc(o.titulo)}</h2>
       <dl>
-        <dt>Técnica</dt><dd>Acuarela sobre papel ${esc(o.papel)}</dd>
-        <dt>Medidas</dt><dd>${medidas(o)}, sin marco</dd>
-        <dt>Formato</dt><dd><a href="#precios" data-cerrar>${f.nombre}</a></dd>
-        <dt>Estado</dt><dd>${o.estado === "disponible" ? "Disponible" : "Colección privada"}</dd>
+        <div><dt>Técnica</dt><dd>Acuarela sobre papel ${esc(papel(o))}</dd></div>
+        <div><dt>Medidas</dt><dd>${medidas(o)}, sin marco</dd></div>
+        <div><dt>Formato</dt><dd><a href="#precios" data-cerrar>${f.nombre}</a></dd></div>
+        <div><dt>Estado</dt><dd>${estado(o)}</dd></div>
       </dl>
       ${o.nota ? `<p class="nota">${esc(o.nota)}.</p>` : ""}
       <div class="adquirir">${compra}</div>`;
@@ -172,7 +186,7 @@
       return `<tr><td>${f.nombre}</td><td>${rango}</td><td>${ejemplos[i] || ""}</td><td>${pesos(f.precio)}</td></tr>`;
     }).join("");
     main.innerHTML = `
-      <header class="encabezado-pagina"><h1>Precios</h1>
+      <header class="encabezado-pagina"><p class="rotulo">Valores</p><h1>Precios</h1>
         <p>El valor de cada acuarela depende de su formato, que se calcula según la superficie del papel (ancho × alto). Al abrir una obra en la galería verás su formato.</p></header>
       <section class="texto">
         <table class="tabla-precios">
@@ -185,7 +199,7 @@
 
   function condiciones() {
     main.innerHTML = `
-      <header class="encabezado-pagina"><h1>Condiciones de venta</h1></header>
+      <header class="encabezado-pagina"><p class="rotulo">Información</p><h1>Condiciones de venta</h1></header>
       <section class="texto">
         <h2>Las obras</h2>
         <p>Todas son acuarelas originales y únicas, pintadas sobre papel 100% de calidad profesional (Arches, Saunders Waterford y Baohong) con acuarelas White Nights y Schmincke Horadam.</p>
@@ -203,7 +217,7 @@
   function sobreMi() {
     const foto = IMG.__yo || "assets/img/portada/yo.png";
     main.innerHTML = `
-      <header class="encabezado-pagina"><h1>Hola, soy Ricardo</h1></header>
+      <header class="encabezado-pagina"><p class="rotulo">Sobre mí</p><h1>Hola, soy Ricardo</h1></header>
       <section class="sobre">
         <img src="${foto}" alt="Ricardo pintando en la academia CAPA" onerror="this.remove()">
         <div class="texto">
@@ -212,6 +226,16 @@
           <p>Para consultas o encargos, escríbeme a <a href="mailto:${C.correo}">${C.correo}</a> o por <a href="${C.instagram}" target="_blank" rel="noopener">Instagram</a>.</p>
         </div>
       </section>`;
+  }
+
+  /* ---------- Aparición al hacer scroll ---------- */
+  const observador = "IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? new IntersectionObserver((entradas) => entradas.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("visible"); observador.unobserve(e.target); }
+      }), { rootMargin: "0px 0px -8% 0px" })
+    : null;
+  function revelar() {
+    main.querySelectorAll(".aparece:not(.visible)").forEach((el) => observador ? observador.observe(el) : el.classList.add("visible"));
   }
 
   /* ---------- Rutas ---------- */
@@ -225,6 +249,7 @@
     if (visor.open) visor.close();
     const ruta = decodeURIComponent(location.hash.slice(1));
     (rutas[ruta] || portada)();
+    if (!quietoGlobal) main.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, easing: "ease" });
     document.querySelectorAll(".menu a").forEach((a) => {
       a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + ruta);
       if (a.hasAttribute("aria-current")) a.setAttribute("aria-current", "page");
